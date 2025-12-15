@@ -16,10 +16,10 @@ The ETL flow follows:
 
 Data Model
 Transactional ERD (Source)
-See: `<img width="1119" height="1247" alt="ERD" src="https://github.com/user-attachments/assets/773ae071-313b-491a-8820-4921ac6489fb" />`
+See: <img width="1119" height="1247" alt="ERD" src="https://github.com/user-attachments/assets/773ae071-313b-491a-8820-4921ac6489fb" />
 
 Data Warehouse Star Schema (Target)
-See: `<img width="1458" height="905" alt="Data Model Diagram drawio" src="https://github.com/user-attachments/assets/62b65e50-9626-49c0-b16c-de2d6f7d39cb" />`
+See: <img width="1458" height="905" alt="Data Model Diagram drawio" src="https://github.com/user-attachments/assets/62b65e50-9626-49c0-b16c-de2d6f7d39cb" />
 
 Warehouse Tables (High-Level)
 Dimensions
