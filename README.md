@@ -4,7 +4,7 @@ The source system is a **transactional bookstore database (Gravity Books ERD)**,
 
 Project Overview
 - **Source**: Transactional schema (books, authors, customers, orders, shipping, addresses, statuses)
-- **Target**: Data Warehouse star schema
+- **Target**: Data Warehouse Galaxy schema
 - **ETL Tooling**: SSIS (Visual Studio)
 - **Database**: Microsoft SQL Server (SSMS)
 
@@ -18,8 +18,20 @@ Data Model
 Transactional ERD (Source)
 See: <img width="1119" height="1247" alt="ERD" src="https://github.com/user-attachments/assets/773ae071-313b-491a-8820-4921ac6489fb" />
 
-Data Warehouse Star Schema (Target)
+Data Warehouse Galaxy Schema (Target)
 See: <img width="1458" height="905" alt="Data Model Diagram drawio" src="https://github.com/user-attachments/assets/62b65e50-9626-49c0-b16c-de2d6f7d39cb" />
+
+SSIS Data Flow
+See: <img width="1051" height="593" alt="image" src="https://github.com/user-attachments/assets/6cb8af59-2a3b-412e-8d0a-c486f2491a00" />
+
+Business Grain
+- fact_orderHeaders: one row per order
+- fact_order: one row per order line (book per order)
+
+Design Decisions
+- Used Galaxy schema to support multiple analytical grains
+- Snowflaked author dimension to handle many-to-many relationships
+- Chose SSIS Lookups for surrogate key resolution
 
 Warehouse Tables (High-Level)
 Dimensions
@@ -47,7 +59,7 @@ Tech Stack
 Repository Structure
 - `ssis/` : Visual Studio solution + SSIS packages (`.sln`, `.dtproj`, `.dtsx`)
 - `sql/`  : SQL scripts to create schemas, staging, dimensions, facts, indexes, and seeds
-- `docs/` : ERD and star schema diagrams
+- `docs/` : ERD and Galaxy schema diagrams
 - `config/`: configuration templates (no secrets)
 
 Setup & Run
@@ -92,17 +104,3 @@ Notes on Data Quality & Design Choices
 - Surrogate keys (`*_sk`) are used in the warehouse for performance and historical tracking.
 - Date dimension provides calendar attributes for reporting (day/week/month/quarter/year and fiscal fields if needed).
 - Bridge table supports many-to-many relationship between books and authors.
-
-What to Customize
-- Server/DB names in connection managers
-- Schema names (if different)
-- `dim_date` generation logic (SQL or SSIS)
-
-Future Improvements (Optional Ideas)
-- Add logging tables for ETL audit (row counts, duration, status)
-- Implement full SCD Type 2 logic for more dimensions
-- Add incremental loading strategy (watermarking) for facts
-- Add unit test queries / reconciliation checks
-
-## License
-Add your preferred license (MIT/Apache-2.0/etc.) in `LICENSE`.
